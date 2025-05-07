@@ -77,5 +77,19 @@ public class ChessPiece {
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         return new ArrayList<>();
+
+        if(getPieceType() == PieceType.PAWN) {
+            //pawn
+        }else if(getPieceType() == PieceType.ROOK){
+            //rook
+        }else if(getPieceType() == PieceType.KNIGHT){
+            //knight
+        }else if(getPieceType() == PieceType.BISHOP){
+            //bishop
+        }else if(getPieceType() == PieceType.QUEEN){
+            //queen
+        }else if(getPieceType() == PieceType.KING) {
+            //king
+        }
     }
 }
