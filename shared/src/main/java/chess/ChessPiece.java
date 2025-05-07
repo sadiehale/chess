@@ -76,20 +76,54 @@ public class ChessPiece {
      * @return Collection of valid moves
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        return new ArrayList<>();
+        Collection<ChessMove> movePossibilities = new ArrayList<>();
+        int row = myPosition.getRow();
+        int col = myPosition.getColumn();
 
         if(getPieceType() == PieceType.PAWN) {
             //pawn
+            return null;
         }else if(getPieceType() == PieceType.ROOK){
             //rook
+            return null;
         }else if(getPieceType() == PieceType.KNIGHT){
             //knight
+            return null;
         }else if(getPieceType() == PieceType.BISHOP){
             //bishop
+            return null;
         }else if(getPieceType() == PieceType.QUEEN){
             //queen
+            return null;
         }else if(getPieceType() == PieceType.KING) {
             //king
+            int[][] kingMoves = {
+                    {0,+1}, {0, -1}, {+1,0}, {-1,0}, {+1,+1}, {+1,-1}, {-1,-1}, {-1,+1}
+            };
+            for (int[] possibility : kingMoves){
+                int newRow = row + possibility[0];
+                int newCol = col + possibility[1];
+
+                if (inBounds(newRow, newCol)){
+                    ChessPosition newSpot = new ChessPosition(newRow, newCol);
+                    if (canMove(newSpot, board)){
+                        movePossibilities.add(new ChessMove(myPosition, newSpot, null));
+                    }
+                }
+            }
         }
+        return movePossibilities;
+    }
+
+    public boolean inBounds(int row, int col){
+        return row >= 1 && row <= 8 && col >= 1 && col <= 8;
+    }
+
+    public boolean canMove(ChessPosition move, ChessBoard board){
+        if (!inBounds(move.getRow(), move.getColumn())){
+            return false;
+        }
+        ChessPiece spotCheck = board.getPiece(move);
+        return spotCheck == null || spotCheck.teamColor != this.teamColor;
     }
 }
