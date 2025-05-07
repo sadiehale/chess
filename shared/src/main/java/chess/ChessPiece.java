@@ -85,16 +85,105 @@ public class ChessPiece {
             return null;
         }else if(getPieceType() == PieceType.ROOK){
             //rook
-            return null;
+            int[][] rookMoves = {
+                    {0, +1}, {0, -1}, {+1, 0}, {-1, 0}
+            };
+            for (int[] possibility : rookMoves){
+                int newRow = row;
+                int newCol = col;
+
+                while (true) {
+                    newRow += possibility[0];
+                    newCol += possibility[1];
+
+                    if (!inBounds(newRow, newCol)){
+                        break;
+                    }else{
+                        ChessPosition newSpot = new ChessPosition(newRow, newCol);
+                        if (canMove(newSpot, board)){
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, null));
+                            if (board.getPiece(newSpot) != null){
+                                break;
+                            }
+                        }else{
+                            break;
+                        }
+                    }
+                }
+            }
+
         }else if(getPieceType() == PieceType.KNIGHT){
             //knight
-            return null;
+            int[][] knightMoves = {
+                    {+1,+2}, {+1,-2}, {-1,+2}, {-1, -2}, {+2, +1}, {+2, -1}, {-2,+1}, {-2, -1}
+            };
+            for (int[] possibility : knightMoves){
+                int newRow = row + possibility[0];
+                int newCol = col + possibility[1];
+
+                if (inBounds(newRow, newCol)){
+                    ChessPosition newSpot = new ChessPosition(newRow, newCol);
+                    if (canMove(newSpot, board)){
+                        movePossibilities.add(new ChessMove(myPosition, newSpot, null));
+                    }
+                }
+            }
         }else if(getPieceType() == PieceType.BISHOP){
             //bishop
-            return null;
+            int[][] bishopMoves = {
+                    {+1, +1}, {+1, -1}, {-1,-1}, {-1, +1}
+            };
+            for (int[] possibility : bishopMoves){
+                int newRow = row;
+                int newCol = col;
+
+                while (true) {
+                    newRow += possibility[0];
+                    newCol += possibility[1];
+
+                    if (!inBounds(newRow, newCol)){
+                        break;
+                    }else{
+                        ChessPosition newSpot = new ChessPosition(newRow, newCol);
+                        if (canMove(newSpot, board)){
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, null));
+                            if (board.getPiece(newSpot) != null){
+                                break;
+                            }
+                        }else{
+                            break;
+                        }
+                    }
+                }
+            }
         }else if(getPieceType() == PieceType.QUEEN){
             //queen
-            return null;
+            int[][] queenMoves = {
+                    {0, +1}, {0, -1}, {+1, 0}, {-1, 0}, {+1,+1}, {+1,-1}, {-1, -1}, {-1, +1}
+            };
+            for (int[] possibility : queenMoves){
+                int newRow = row;
+                int newCol = col;
+
+                while (true) {
+                    newRow += possibility[0];
+                    newCol += possibility[1];
+
+                    if (!inBounds(newRow, newCol)){
+                        break;
+                    }else{
+                        ChessPosition newSpot = new ChessPosition(newRow, newCol);
+                        if (canMove(newSpot, board)){
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, null));
+                            if (board.getPiece(newSpot) != null){
+                                break;
+                            }
+                        }else{
+                            break;
+                        }
+                    }
+                }
+            }
         }else if(getPieceType() == PieceType.KING) {
             //king
             int[][] kingMoves = {
