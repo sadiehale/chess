@@ -82,7 +82,80 @@ public class ChessPiece {
 
         if(getPieceType() == PieceType.PAWN) {
             //pawn
-            return null;
+            int[][] pawnMoves; //moves in straight line forward one (unless first move)
+            int[][] pawnMoves_capturing; //diagonal only when capturing
+
+            if (board.getPiece(myPosition).teamColor == ChessGame.TeamColor.WHITE){ //white team can only move one direction
+                pawnMoves_capturing = new int[][] {{+1,+1}, {+1,-1}};
+                if (myPosition.getRow() == 2){
+                    pawnMoves = new int[][] {{+1,0}, {+2, 0}};
+                }else{
+                    pawnMoves = new int[][] {{+1,0}};
+                }
+            }else{
+                pawnMoves_capturing = new int[][] {{-1, +1}, {-1,-1}};
+                if (myPosition.getRow() == 7){
+                    pawnMoves = new int[][] {{-1, 0}, {-2, 0}};
+                }else{
+                    pawnMoves = new int[][] {{-1, 0}};
+                }
+            }
+
+            for( int[] possibility : pawnMoves){
+                int newRow = row;
+                int newCol = col;
+                newRow += possibility[0];
+                newCol += possibility[1];
+
+                if(inBounds(newRow, newCol)){
+                    ChessPosition newSpot = new ChessPosition(newRow, newCol);
+                    if (board.getPiece(newSpot) == null) { //check and see if new spot is empty & promote pawn suggestions
+                        if ((newRow == 8 && board.getPiece(myPosition).teamColor == ChessGame.TeamColor.WHITE)){
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.BISHOP));
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.KNIGHT));
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.QUEEN));
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.ROOK));
+
+                        }else if(newRow == 1 && board.getPiece(myPosition).teamColor == ChessGame.TeamColor.BLACK){
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.BISHOP));
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.KNIGHT));
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.QUEEN));
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.ROOK));
+
+                        }else{
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, null));
+                        }
+                    }else{
+                        break;
+                    }
+                }
+            }
+
+            for(int[] possibility : pawnMoves_capturing){
+                int newRow = row;
+                int newCol = col;
+                newRow += possibility[0];
+                newCol += possibility[1];
+
+                if (inBounds(newRow, newCol)){
+                    ChessPosition newSpot = new ChessPosition (newRow, newCol);
+                    if (board.getPiece(newSpot) != null && (board.getPiece(newSpot).teamColor != board.getPiece(myPosition).teamColor)){
+                        if (newRow == 8 && board.getPiece(myPosition).teamColor == ChessGame.TeamColor.WHITE){
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.BISHOP));
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.KNIGHT));
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.QUEEN));
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.ROOK));
+                        }else if(newRow == 1 && board.getPiece(myPosition).teamColor == ChessGame.TeamColor.BLACK){
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.BISHOP));
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.KNIGHT));
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.QUEEN));
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, PieceType.ROOK));
+                        }else{
+                            movePossibilities.add(new ChessMove(myPosition, newSpot, null));
+                        }
+                    }
+                }
+            }
         }else if(getPieceType() == PieceType.ROOK){
             //rook
             int[][] rookMoves = {
