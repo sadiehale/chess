@@ -93,7 +93,7 @@ public class ChessPiece {
                     pawnMoves = new int[][] {{+1,0}};
                 }
             }else{
-                pawnMoves_capturing = new int[][] {{-1, +1}, {-1,-1}};
+                pawnMoves_capturing = new int[][] {{-1, +1}, {-1,-1}}; //black team moves in opposite direction
                 if (myPosition.getRow() == 7){
                     pawnMoves = new int[][] {{-1, 0}, {-2, 0}};
                 }else{
@@ -156,7 +156,7 @@ public class ChessPiece {
                     }
                 }
             }
-        }else if(getPieceType() == PieceType.ROOK){
+        }else if(getPieceType() == PieceType.ROOK){ //moves in straight lines
             //rook
             int[][] rookMoves = {
                     {0, +1}, {0, -1}, {+1, 0}, {-1, 0}
@@ -185,7 +185,7 @@ public class ChessPiece {
                 }
             }
 
-        }else if(getPieceType() == PieceType.KNIGHT){
+        }else if(getPieceType() == PieceType.KNIGHT){ //moves in L shape, 2 in one direction & 1 in other direction
             //knight
             int[][] knightMoves = {
                     {+1,+2}, {+1,-2}, {-1,+2}, {-1, -2}, {+2, +1}, {+2, -1}, {-2,+1}, {-2, -1}
@@ -201,7 +201,7 @@ public class ChessPiece {
                     }
                 }
             }
-        }else if(getPieceType() == PieceType.BISHOP){
+        }else if(getPieceType() == PieceType.BISHOP){ // moves in diagonal lines
             //bishop
             int[][] bishopMoves = {
                     {+1, +1}, {+1, -1}, {-1,-1}, {-1, +1}
@@ -229,7 +229,7 @@ public class ChessPiece {
                     }
                 }
             }
-        }else if(getPieceType() == PieceType.QUEEN){
+        }else if(getPieceType() == PieceType.QUEEN){ //moves in straight and diagonal lines
             //queen
             int[][] queenMoves = {
                     {0, +1}, {0, -1}, {+1, 0}, {-1, 0}, {+1,+1}, {+1,-1}, {-1, -1}, {-1, +1}
@@ -257,7 +257,7 @@ public class ChessPiece {
                     }
                 }
             }
-        }else if(getPieceType() == PieceType.KING) {
+        }else if(getPieceType() == PieceType.KING) { //moves one square in all directions
             //king
             int[][] kingMoves = {
                     {0,+1}, {0, -1}, {+1,0}, {-1,0}, {+1,+1}, {+1,-1}, {-1,-1}, {-1,+1}
@@ -277,11 +277,11 @@ public class ChessPiece {
         return movePossibilities;
     }
 
-    public boolean inBounds(int row, int col){
+    public boolean inBounds(int row, int col){ //checks if within 8by8 grid
         return row >= 1 && row <= 8 && col >= 1 && col <= 8;
     }
 
-    public boolean canMove(ChessPosition move, ChessBoard board){
+    public boolean canMove(ChessPosition move, ChessBoard board){ // checks spot
         if (!inBounds(move.getRow(), move.getColumn())){
             return false;
         }

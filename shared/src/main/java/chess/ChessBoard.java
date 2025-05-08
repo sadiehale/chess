@@ -55,7 +55,7 @@ public class ChessBoard {
      * position
      */
     public ChessPiece getPiece(ChessPosition position) {
-        return squares[position.getRow() - 1][position.getColumn() - 1];
+        return squares[position.getRow() - 1][position.getColumn() - 1]; // adjust by -1 to fit java [8][8] grid
     }
 
     /**
@@ -63,7 +63,7 @@ public class ChessBoard {
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
-        squares = new ChessPiece[8][8];
+        squares = new ChessPiece[8][8]; //WHITE on rows 0&1, BLACK on rows 6&7
         //pawns
         for (int i = 0; i < 8; i++) {
             squares[1][i] = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN);

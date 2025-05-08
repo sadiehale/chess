@@ -40,7 +40,7 @@ public class ChessMove {
                      ChessPiece.PieceType promotionPiece) {
         this.start = startPosition;
         this.end = endPosition;
-        this.promotion = promotionPiece;
+        this.promotion = promotionPiece; //used by pawns, null in all other cases
     }
 
     /**
