@@ -48,17 +48,16 @@ public class ChessGame {
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         Collection<ChessMove> validPossibilities = new ArrayList<>();
-        int row = startPosition.getRow();
-        int col = startPosition.getColumn();
+        ChessPiece piece = getBoard().getPiece(startPosition);
+        if (piece == null){
+            return null;
+        }
+        TeamColor pieceColor = piece.getTeamColor();
 
-        //get board and make changes to copy of board, then if that works (try makeMove)
-        // -> add to validPossibilities
-        //delete copy bc don't need it anymore
-        //if isInCheck(teamColor) -> dont add to validPossibilities
-        //if isInCheck(other teamColor) -> add to validPossibilities
-        //if isInCheckmate(teamColor) -> dont add to validPossibilities
-        //if isInCheckmate(other teamColor) -> add to validPossibilities
-        //if isInStalemate(teamColor) (no valid moves) -> return null
+        Collection<ChessMove> movePossibilities = piece.pieceMoves(getBoard(), startPosition);
+        for(ChessMove move : movePossibilities){
+            ChessBoard copyBoard = getBoard().deepCopy();
+        }
 
         return validPossibilities;
     }

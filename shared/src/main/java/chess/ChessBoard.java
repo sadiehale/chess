@@ -33,8 +33,20 @@ public class ChessBoard {
         return Arrays.deepHashCode(squares);
     }
 
-    public ChessBoard() {
+    public ChessBoard(ChessBoard current) {
+        this.squares = new ChessPiece[8][8];
+        for(int row = 0; row < 8; row++){
+            for(int col = 0; col < 8; col++){
+                ChessPiece piece = current.squares[row][col];
+                if(piece != null){
+                    this.squares[row][col] = new ChessPiece(piece.getTeamColor(), piece.getPieceType());
+                }
+            }
+        }
+    }
 
+    public ChessBoard deepCopy(){
+        return new ChessBoard(this);
     }
 
     /**
@@ -91,4 +103,10 @@ public class ChessBoard {
         squares[0][4] = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KING);
         squares[7][4] = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KING);
     }
+
+    public DeepCopy(){
+
+    }
+
+
 }
