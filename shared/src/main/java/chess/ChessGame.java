@@ -55,8 +55,14 @@ public class ChessGame {
         TeamColor pieceColor = piece.getTeamColor();
 
         Collection<ChessMove> movePossibilities = piece.pieceMoves(getBoard(), startPosition);
-        for(ChessMove move : movePossibilities){
-            ChessBoard copyBoard = getBoard().deepCopy();
+        for(ChessMove possibility : movePossibilities){
+            ChessBoard copiedBoard = getBoard().deepCopy();
+//            copiedBoard.makeMove(possibility);
+            ChessGame attemptedMove = new ChessGame();
+            attemptedMove.setBoard(copiedBoard);
+            if(!attemptedMove.isInCheck(pieceColor)){
+                validPossibilities.add(possibility);
+            }
         }
 
         return validPossibilities;
@@ -72,6 +78,12 @@ public class ChessGame {
         throw new RuntimeException("Not implemented");
     }
 
+
+    public void moveOnBoard(ChessBoard board, ChessMove move){
+        ChessPiece piece = board.getPiece(move.getStartPosition());
+        board.setPiece(move.getStartPosition());
+
+    }
     /**
      * Determines if the given team is in check
      *
@@ -102,14 +114,14 @@ public class ChessGame {
     public boolean isInStalemate(TeamColor teamColor) {
         throw new RuntimeException("Not implemented");
     }
-
+    private ChessBoard board;
     /**
      * Sets this game's chessboard with a given board
      *
      * @param board the new board to use
      */
     public void setBoard(ChessBoard board) {
-        throw new RuntimeException("Not implemented");
+        this.board = board;
     }
 
     /**
@@ -118,6 +130,6 @@ public class ChessGame {
      * @return the chessboard
      */
     public ChessBoard getBoard() {
-        throw new RuntimeException("Not implemented");
+        return this.board;
     }
 }
