@@ -2,6 +2,7 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * For a class that can manage a chess game, making moves on a board
@@ -10,9 +11,31 @@ import java.util.Collection;
  * signature of the existing methods.
  */
 public class ChessGame {
+    @Override
+    public String toString() {
+        return "ChessGame{" +
+                "teamTurn=" + teamTurn +
+                ", board=" + board +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessGame chessGame = (ChessGame) o;
+        return teamTurn == chessGame.teamTurn && Objects.equals(board, chessGame.board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(teamTurn, board);
+    }
 
     public ChessGame() {
-
+        this.board = new ChessBoard();
+        this.teamTurn = TeamColor.WHITE;
     }
     private TeamColor teamTurn;
     /**
@@ -179,7 +202,7 @@ public class ChessGame {
      * @return True if the specified team is in stalemate, otherwise false
      */
     public boolean isInStalemate(TeamColor teamColor) {
-        if(isInCheck(teamColor)){
+        if(!isInCheck(teamColor)){
             for(int row = 1; row <= 8; row++){
                 for(int col = 1; col <= 8; col++){
                     ChessPosition spot = new ChessPosition(row, col);
@@ -193,8 +216,9 @@ public class ChessGame {
                     }
                 }
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
 
