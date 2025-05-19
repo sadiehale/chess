@@ -34,8 +34,8 @@ public class ChessBoard {
     }
 
     public ChessBoard() {
-
     }
+
 
     public ChessBoard(ChessBoard current){
         this.squares = new ChessPiece[8][8];
@@ -47,6 +47,7 @@ public class ChessBoard {
                 }
             }
         }
+
     }
 
     public ChessBoard deepCopy(){
