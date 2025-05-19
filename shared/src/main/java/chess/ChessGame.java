@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -46,7 +47,20 @@ public class ChessGame {
      * startPosition
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
-        throw new RuntimeException("Not implemented");
+        Collection<ChessMove> validPossibilities = new ArrayList<>();
+        int row = startPosition.getRow();
+        int col = startPosition.getColumn();
+
+        //get board and make changes to copy of board, then if that works (try makeMove)
+        // -> add to validPossibilities
+        //delete copy bc don't need it anymore
+        //if isInCheck(teamColor) -> dont add to validPossibilities
+        //if isInCheck(other teamColor) -> add to validPossibilities
+        //if isInCheckmate(teamColor) -> dont add to validPossibilities
+        //if isInCheckmate(other teamColor) -> add to validPossibilities
+        //if isInStalemate(teamColor) (no valid moves) -> return null
+
+        return validPossibilities;
     }
 
     /**
