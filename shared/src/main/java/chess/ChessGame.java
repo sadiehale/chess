@@ -57,7 +57,7 @@ public class ChessGame {
         Collection<ChessMove> movePossibilities = piece.pieceMoves(getBoard(), startPosition);
         for(ChessMove possibility : movePossibilities){
             ChessBoard copiedBoard = getBoard().deepCopy();
-//            copiedBoard.makeMove(possibility);
+            moveOnBoard(copiedBoard, possibility);
             ChessGame attemptedMove = new ChessGame();
             attemptedMove.setBoard(copiedBoard);
             if(!attemptedMove.isInCheck(pieceColor)){
@@ -75,13 +75,31 @@ public class ChessGame {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-        throw new RuntimeException("Not implemented");
+        ChessPiece piece = board.getPiece(move.getStartPosition());
+        if(piece == null){
+            throw new InvalidMoveException("No piece to move / at startPosition");
+        }
+        if(piece.getTeamColor() != teamTurn){
+            throw new InvalidMoveException("piece color does not match team color");
+        }
+        moveOnBoard(board, move);
+        if (teamTurn == TeamColor.WHITE){
+            teamTurn = TeamColor.BLACK;
+        }else{
+            teamTurn = TeamColor.WHITE;
+        }
     }
 
 
     public void moveOnBoard(ChessBoard board, ChessMove move){
         ChessPiece piece = board.getPiece(move.getStartPosition());
-        board.setPiece(move.getStartPosition());
+        board.addPiece(move.getStartPosition(), null);
+        if(move.getPromotionPiece() != null){
+            ChessPiece promoted = new ChessPiece(piece.getTeamColor(), move.getPromotionPiece());
+            board.addPiece(move.getEndPosition(), promoted);
+        }else{
+            board.addPiece(move.getEndPosition(), piece);
+        }
 
     }
     /**
